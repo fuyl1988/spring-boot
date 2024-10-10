@@ -1,6 +1,5 @@
 plugins {
 	id "org.springframework.boot.bom"
-	id "org.springframework.boot.conventions"
 	id "org.springframework.boot.deployed"
 }
 
@@ -156,6 +155,13 @@ bom {
 		group("org.graalvm.buildtools") {
 			modules = [
 				"native-gradle-plugin"
+			]
+		}
+	}
+	library("OpenTelemetry Logback Appender", "2.7.0-alpha") {
+		group("io.opentelemetry.instrumentation") {
+			modules = [
+				"opentelemetry-logback-appender-1.0"
 			]
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2023 the original author or authors.
+ * Copyright 2012-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import org.springframework.boot.autoconfigure.condition.SearchStrategy;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration.MessageSourceRuntimeHints;
 import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration.ResourceBundleCondition;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +42,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ConcurrentReferenceHashMap;
 import org.springframework.util.StringUtils;
 
@@ -59,24 +59,17 @@ import org.springframework.util.StringUtils;
 @ConditionalOnMissingBean(name = AbstractApplicationContext.MESSAGE_SOURCE_BEAN_NAME, search = SearchStrategy.CURRENT)
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @Conditional(ResourceBundleCondition.class)
-@EnableConfigurationProperties
+@EnableConfigurationProperties(MessageSourceProperties.class)
 @ImportRuntimeHints(MessageSourceRuntimeHints.class)
 public class MessageSourceAutoConfiguration {
 
 	private static final Resource[] NO_RESOURCES = {};
 
 	@Bean
-	@ConfigurationProperties(prefix = "spring.messages")
-	public MessageSourceProperties messageSourceProperties() {
-		return new MessageSourceProperties();
-	}
-
-	@Bean
 	public MessageSource messageSource(MessageSourceProperties properties) {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		if (StringUtils.hasText(properties.getBasename())) {
-			messageSource.setBasenames(StringUtils
-				.commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(properties.getBasename())));
+		if (!CollectionUtils.isEmpty(properties.getBasename())) {
+			messageSource.setBasenames(properties.getBasename().toArray(new String[0]));
 		}
 		if (properties.getEncoding() != null) {
 			messageSource.setDefaultEncoding(properties.getEncoding().name());

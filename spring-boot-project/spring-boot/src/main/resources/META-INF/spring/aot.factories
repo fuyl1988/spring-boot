@@ -1,5 +1,5 @@
 org.springframework.aot.hint.RuntimeHintsRegistrar=\
-org.springframework.boot.SpringApplication.SpringApplicationRuntimeHints,\
+org.springframework.boot.ApplicationProperties.ApplicationPropertiesRuntimeHints,\
 org.springframework.boot.SpringApplicationBannerPrinter.SpringApplicationBannerPrinterRuntimeHints,\
 org.springframework.boot.WebApplicationType.WebApplicationTypeRuntimeHints,\
 org.springframework.boot.context.config.ConfigDataLocationRuntimeHints,\
@@ -15,6 +15,7 @@ org.springframework.boot.web.server.MimeMappings.MimeMappingsRuntimeHints
 
 org.springframework.beans.factory.aot.BeanFactoryInitializationAotProcessor=\
 org.springframework.boot.context.properties.ConfigurationPropertiesBeanFactoryInitializationAotProcessor,\
+org.springframework.boot.env.EnvironmentPostProcessorApplicationListener.EnvironmentBeanFactoryInitializationAotProcessor,\
 org.springframework.boot.jackson.JsonComponentModule.JsonComponentBeanFactoryInitializationAotProcessor
 
 org.springframework.beans.factory.aot.BeanRegistrationAotProcessor=\

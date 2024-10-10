@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import com.redis.testcontainers.RedisContainer;
+import com.redis.testcontainers.RedisStackContainer;
 import org.testcontainers.activemq.ActiveMQContainer;
 import org.testcontainers.activemq.ArtemisContainer;
 import org.testcontainers.containers.CassandraContainer;
@@ -82,14 +84,14 @@ public enum TestImage {
 			(container) -> ((CassandraContainer<?>) container).withStartupTimeout(Duration.ofMinutes(10))),
 
 	/**
-	 * A Docker image suitable for running.
+	 * A container image suitable for testing Couchbase.
 	 */
 	COUCHBASE("couchbase/server", "7.1.4", () -> CouchbaseContainer.class,
 			(container) -> ((CouchbaseContainer) container).withStartupAttempts(5)
 				.withStartupTimeout(Duration.ofMinutes(10))),
 
 	/**
-	 * A Docker image suitable for Elasticsearch 7.
+	 * A container image suitable for testing Elasticsearch 7.
 	 */
 	ELASTICSEARCH("docker.elastic.co/elasticsearch/elasticsearch", "7.17.5", () -> ElasticsearchContainer.class,
 			(container) -> ((ElasticsearchContainer) container).withEnv("ES_JAVA_OPTS", "-Xms32m -Xmx512m")
@@ -106,6 +108,11 @@ public enum TestImage {
 	 */
 	GRAFANA_OTEL_LGTM("grafana/otel-lgtm", "0.6.0", () -> LgtmStackContainer.class,
 			(container) -> ((LgtmStackContainer) container).withStartupTimeout(Duration.ofMinutes(2))),
+
+	/**
+	 * A container image suitable for testing Hazelcast.
+	 */
+	HAZELCAST("hazelcast/hazelcast", "5.5.0-slim", () -> HazelcastContainer.class),
 
 	/**
 	 * A container image suitable for testing Confluent's distribution of Kafka.
@@ -128,7 +135,7 @@ public enum TestImage {
 	MARIADB("mariadb", "10.10"),
 
 	/**
-	 * A Docker image suitable for MongoDB.
+	 * A container image suitable for testing MongoDB.
 	 */
 	MONGODB("mongo", "5.0.17", () -> MongoDBContainer.class,
 			(container) -> ((MongoDBContainer) container).withStartupAttempts(5)
@@ -211,7 +218,7 @@ public enum TestImage {
 			(container) -> ((RedpandaContainer) container).withStartupTimeout(Duration.ofMinutes(5))),
 
 	/**
-	 * A container image suitable for testing a Docker registry.
+	 * A container image suitable for testing Docker Registry.
 	 */
 	REGISTRY("registry", "2.7.1", () -> RegistryContainer.class,
 			(container) -> ((RegistryContainer) container).withStartupAttempts(5)
@@ -243,7 +250,7 @@ public enum TestImage {
 	BITNAMI_MARIADB("bitnami/mariadb", "11.2.3"),
 
 	/**
-	 * A Docker image suitable for MongoDB via Bitnami.
+	 * A container image suitable for testing MongoDB via Bitnami.
 	 */
 	BITNAMI_MONGODB("bitnami/mongodb", "7.0.5"),
 
@@ -339,6 +346,10 @@ public enum TestImage {
 		catch (Exception ex) {
 			throw new IllegalStateException("Unable to create container " + containerClass, ex);
 		}
+	}
+
+	public String getTag() {
+		return this.tag;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 plugins {
 	id "org.antora"
-	id "org.springframework.boot.conventions"
 	id "org.springframework.boot.maven-plugin"
 	id "org.springframework.boot.optional-dependencies"
 	id "org.springframework.boot.docker-test"
@@ -92,12 +91,18 @@ ext {
 	xsdVersion = versionElements[0] + "." + versionElements[1]
 }
 
+task copySettingsXml(type: Copy) {
+	from file("src/intTest/projects/settings.xml")
+	into "${buildDir}/generated-resources/settings"
+	filter(springRepoistoryTransformers.mavenSettings())
+}
+
 sourceSets {
 	main {
 		output.dir("${buildDir}/generated/resources/xsd", builtBy: "xsdResources")
 	}
 	intTest {
-		output.dir("${buildDir}/generated-resources", builtBy: "extractVersionProperties")
+		output.dir("${buildDir}/generated-resources", builtBy: ["extractVersionProperties", "copySettingsXml"])
 	}
 	dockerTest {
 		output.dir("${buildDir}/generated-resources", builtBy: "extractVersionProperties")
@@ -124,7 +129,7 @@ task xsdResources(type: Sync) {
 }
 
 prepareMavenBinaries {
-	versions = [ "3.9.6", "3.6.3" ]
+	versions = [ "3.9.9", "3.6.3" ]
 }
 
 tasks.named("documentPluginGoals") {
