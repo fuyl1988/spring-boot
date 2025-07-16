@@ -172,7 +172,7 @@ bom {
 			releaseNotes("https://github.com/cache2k/cache2k/releases/tag/v{version}")
 		}
 	}
-	library("Caffeine", "3.2.1") {
+	library("Caffeine", "3.2.2") {
 		group("com.github.ben-manes.caffeine") {
 			modules = [
 				"caffeine",
@@ -230,7 +230,7 @@ bom {
 			releaseNotes("https://commons.apache.org/proper/commons-dbcp/changes-report.html#a{version}")
 		}
 	}
-	library("Commons Lang3", "3.17.0") {
+	library("Commons Lang3", "3.18.0") {
 		group("org.apache.commons") {
 			modules = [
 				"commons-lang3"
@@ -549,7 +549,7 @@ bom {
 			releaseNotes("https://github.com/hazelcast/hazelcast/releases/tag/v{version}")
 		}
 	}
-	library("Hibernate", "7.0.5.Final") {
+	library("Hibernate", "7.0.6.Final") {
 		group("org.hibernate.orm") {
 			modules = [
 				"hibernate-agroal",
@@ -1383,7 +1383,7 @@ bom {
 			releaseNotes("https://github.com/apache/maven-deploy-plugin/releases/tag/maven-deploy-plugin-{version}")
 		}
 	}
-	library("Maven Enforcer Plugin", "3.6.0") {
+	library("Maven Enforcer Plugin", "3.6.1") {
 		group("org.apache.maven.plugins") {
 			plugins = [
 				"maven-enforcer-plugin"
@@ -1630,7 +1630,7 @@ bom {
 			]
 		}
 	}
-	library("Neo4j Java Driver", "5.28.8") {
+	library("Neo4j Java Driver", "5.28.9") {
 		alignWith {
 			version {
 				from "org.springframework.data:spring-data-neo4j"
@@ -1648,7 +1648,7 @@ bom {
 			releaseNotes("https://github.com/neo4j/neo4j-java-driver/releases/tag/{version}")
 		}
 	}
-	library("Netty", "4.2.2.Final") {
+	library("Netty", "4.2.3.Final") {
 		prohibit {
 			contains ".Alpha"
 			contains ".Beta"
@@ -1663,7 +1663,7 @@ bom {
 			javadoc(version -> "https://netty.io/%s.%s/api".formatted(version.major(), version.minor()), "io.netty")
 		}
 	}
-	library("OpenTelemetry", "1.51.0") {
+	library("OpenTelemetry", "1.52.0") {
 		group("io.opentelemetry") {
 			bom("opentelemetry-bom")
 		}
@@ -1938,7 +1938,7 @@ bom {
 			]
 		}
 	}
-	library("Reactor Bom", "2025.0.0-SNAPSHOT") {
+	library("Reactor Bom", "2025.0.0-M5") {
 		considerSnapshots()
 		calendarName = "Reactor"
 		group("io.projectreactor") {
